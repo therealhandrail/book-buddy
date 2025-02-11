@@ -115,3 +115,11 @@ button {
 .line {
     display: inline-block;
 }
+
+/* Books */
+
+.AllBooks {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}

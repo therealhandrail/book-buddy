@@ -1,21 +1,24 @@
 import { useEffect } from 'react';
-import axios from 'axios';
 import PropTypes from 'prop-types';
+import '../index.css';
+// import { AuthContext } from '../context/AuthProvider';
 
 const API_URL = 'https://fsa-book-buddy-b6e748d1380d.herokuapp.com/api';
 
-function AllBooks({ setBooks }) {
+function AllBooks({ books, setBooks }) {
   const fetchAllBooks = async () => {
     try {
-      const response = await axios.get(`${API_URL}/books`, {
+      const response = await fetch(`${API_URL}/books`, {
         headers: {
-          // Authorization: `Bearer ${token}`
-        }
+          'Content-Type': 'application/json',
+          // Authorization: `Bearer ${AuthContext.token}`,
+        },
       });
-      console.log(response.data);
-      setBooks(response.data);
-    } catch (error) {
-      console.log(error);
+      const result = await response.json();
+      console.log(result);
+      setBooks(result);
+    } catch (err) {
+      console.error("Uh oh, trouble fetching books!", err);
     }
   };
 
@@ -23,9 +26,26 @@ function AllBooks({ setBooks }) {
     fetchAllBooks();
   }, []);
 
-  return null; // This component doesn't need to render anything itself
+  return (
+    <div className="AllBooks">
+      {Array.isArray(books) && books.length > 0 ? (
+        books.map((book) => (
+          <div className="bookBox" key={book.id}>
+            <h2>{book.title}</h2>
+            <img className="bookImg" src={book.imageUrl} alt={book.title} />
+            &nbsp;
+            {/* <button onClick={() => SingleBook(book.id)}>See Details</button> */}
+          </div>
+        ))
+      ) : (
+        <p>No books available</p>
+      )}
+    </div>
+  );
 }
+
 AllBooks.propTypes = {
+  books: PropTypes.array.isRequired,
   setBooks: PropTypes.func.isRequired,
 };
 

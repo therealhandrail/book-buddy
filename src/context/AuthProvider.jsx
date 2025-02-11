@@ -17,4 +17,5 @@ AuthProvider.propTypes = {
     children: PropTypes.node.isRequired,
 };
 
-export default AuthContext;
+export { AuthContext };
+export default AuthProvider;

@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect, useContext } from 'react';
-import { AuthContext } from '../context/AuthProvider';
+import { AuthContext } from '../context/AuthProvider.jsx';
 import axios from '../api/fetch.js';
 const LOGIN_URL = 'api/users/login';
 
